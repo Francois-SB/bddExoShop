@@ -13,5 +13,5 @@ select * from T_Articles group by Brand having SUM(UnitaryPrice) > 100; --TODO
 -- 1.12 add categorie + add some
 
 -- 1.13	request for tab
-select * from T_Articles inner join T_Categories on T_Articles.IdArticle = T_Categories.IdCategorie
-where;
+select * from T_Articles inner join T_Categories on T_Articles.IdCategory = T_Categories.IdCategory
+order by UnitaryPrice;
