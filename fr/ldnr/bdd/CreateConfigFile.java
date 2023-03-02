@@ -6,11 +6,11 @@ import java.io.IOException;
 import java.util.Properties;
 
 public class CreateConfigFile {
-	try {
+	
 	private Properties prop = readPropertiersFile("files/config.properties");
-	}catch(IOException ioe){
-		ioe.printStackTrace();
-	}
+	
+		
+	
 	private String dbUrl = prop.getProperty("db.url");
 	private String login = prop.getProperty("db.login");
 	private String password = prop.getProperty("db.password");
@@ -21,7 +21,27 @@ public class CreateConfigFile {
 //    System.out.println("login: "+ prop.getProperty("login"));
 //    System.out.println("password: "+ prop.getProperty("password"));
 	
-	public Properties readPropertiersFile(String fileName) throws IOException{
+/**
+ * constr creating object with file data
+ * 
+ */
+	public CreateConfigFile() {
+		Properties prop = readPropertiersFile("files/config.properties");
+		this.dbUrl = prop.getProperty("db.url");
+		this.login = prop.getProperty("db.login");
+		this.password = prop.getProperty("db.password");
+		this.driverClass = prop.getProperty("db.driver.class");
+	}
+
+//	public CreateConfigFile getConfigFile() {
+//		this.dbUrl = prop.getProperty("db.url");
+//		this.login = prop.getProperty("db.login");
+//		this.password = prop.getProperty("db.password");
+//		this.driverClass = prop.getProperty("db.driver.class");
+//	}
+	
+	
+	public Properties readPropertiersFile(String fileName) {
 	      FileInputStream fis = null;
 	      Properties prop = null;
 	      try {
@@ -33,10 +53,23 @@ public class CreateConfigFile {
 	      } catch(IOException ioe) {
 	         ioe.printStackTrace();
 	      } finally {
+	    	  try {
 	         fis.close();
+	    	  }catch(IOException ioe){
+	    	  ioe.printStackTrace();
+	    	  }
 	      }
 	      return prop;
 	   }
+
+
+	public static void main(String[] args){
+
+		CreateConfigFile cf = new CreateConfigFile();
+		cf.toString();
+	
+	}
+
 
 
 
@@ -84,6 +117,12 @@ public class CreateConfigFile {
 
 	public void setDriverClass(String driverClass) {
 		this.driverClass = driverClass;
+	}
+
+	@Override
+	public String toString() {
+		return "CreateConfigFile [dbUrl=" + dbUrl + ", login=" + login + ", password=" + password + ", driverClass="
+				+ driverClass + "]";
 	}
 	
 	}

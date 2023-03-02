@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import fr.ldnr.entities.Article;
 
 public class ArticleDao implements Dao<Article>{
-	//ArrayList<Article> articles = new ArrayList<>();
+	ArrayList<Article> articles = new ArrayList<>();
 	
 	public Connection connection = BddConnection.getConnection();
 		
@@ -73,8 +73,8 @@ public class ArticleDao implements Dao<Article>{
 	/**@return a list of all articles of T_Articles
 	 * 
 	 */
-	public Arraylist<Article> readAll(){
-		Arraylist<Article> myArticleList= new ArrayList<>();
+	public ArrayList<Article> readAll(){
+		ArrayList<Article> myArticleList= new ArrayList<>();
 		String strSql = "select * from T_articles";
 		try (Statement statement = connection.createStatement()){
 			try(ResultSet resultSet = statement.executeQuery(strSql)){
