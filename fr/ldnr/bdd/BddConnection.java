@@ -7,8 +7,7 @@ import java.util.Properties;
 /**
  * 
  * @author SupervielleF
- * The class BDD connection return a connection from an Object createFileConfig which contains
- * URL, login, password
+ * 
  * Load driver & connect to db 
  */
 
@@ -65,8 +64,8 @@ public static BddConnection getInstance() {
 		}
 		return connection;
 	}
-	public static void main(String[] args){
-		Connection connection = BddConnection.getInstance().getConnection();
-		System.out.println(connection);
-	}
+//	public static void main(String[] args){
+//		Connection connection = BddConnection.getInstance().getConnection();
+//		System.out.println(connection);
+//	}
 }
