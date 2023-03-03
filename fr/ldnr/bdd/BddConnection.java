@@ -9,33 +9,64 @@ import java.util.Properties;
  * @author SupervielleF
  * The class BDD connection return a connection from an Object createFileConfig which contains
  * URL, login, password
+ * Load driver & connect to db 
  */
 
 
 public class BddConnection {
-	private Connection connection;
-	private CreateConfigFile cf = new CreateConfigFile();
+	CreateConfigFile cf = new CreateConfigFile();
+	Properties prop = cf.readPropertiersFile("src/files/config.properties");	
 	
+	private String dbUrl = prop.getProperty("db.url");
+	private String login = prop.getProperty("db.login");
+	private String password = prop.getProperty("db.password");
+	static private String driverClass = "db.driver.class";
+	//un seul objet pouvant appeller getConnection à la fois. Donc only 1 co possible en simultanée.
+	private static BddConnection instance = null;
+	
+	private BddConnection() {
+		
+	}
+	
+	/**
+	 * @return BddConnection object
+	 * if no BddConnection object exists, create one
+	 */
+public static BddConnection getInstance() {
+	try {
+		Class.forName("org.mariadb.jdbc.Driver");
+		System.out.println("dc ok");
+	}catch (ClassNotFoundException e) {
+		e.printStackTrace();
+	}
+	try {
+		if (instance==null){
+			instance = new BddConnection();
+			System.out.println("created ok");
+		}
+	} catch (Exception e) {
+		e.printStackTrace();
+	}
+	return instance;
+	
+}
 /**
  * 
  * @return Connection to dataBase 
- * from the CreateConfigFile Object
+ * 
  */
 	public Connection getConnection() {
+		Connection connection = null;
 		try {
-			Class.forName(cf.getDriverClass());
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}
-		try (Connection connection = DriverManager.getConnection(cf.getDbUrl(),cf.getLogin(),cf.getPassword())){
-			
+			connection = DriverManager.getConnection(dbUrl,login,password);
+			System.out.println("connection ok ");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return connection;
 	}
-
-
-		//ArrayList<Article> articles = new ArrayList<>();
-
+	public static void main(String[] args){
+		Connection connection = BddConnection.getInstance().getConnection();
+		System.out.println(connection);
+	}
 }

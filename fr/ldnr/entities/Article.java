@@ -20,6 +20,9 @@ public class Article {
 		this.price = price;
 		//this.idCategory = NULL;
 	}
+	public Article(int idArticle) {
+		this.idArticle = idArticle;
+	}
 	public int getIdArticle() {
 		return idArticle;
 	}
