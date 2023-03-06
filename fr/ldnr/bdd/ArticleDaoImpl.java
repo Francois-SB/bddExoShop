@@ -9,48 +9,8 @@ import java.util.ArrayList;
 
 import fr.ldnr.entities.Article;
 
-public class ArticleDao implements Dao{//<Article>
-	ArrayList<Article> articles = new ArrayList<>();
-	//BddConnection bddConnection;
-	
-	public static void main(String[] args){
+public class ArticleDaoImpl implements Dao<Article>{//<Article>
 
-		
-			System.out.println(connection);
-			ArticleDao ardao = new ArticleDao();
-			ardao.readAll().stream().forEach(System.out::println);
-			Article art = new Article(19);
-//			art=ardao.read(18);
-//			System.out.println("read " +art);
-//			//create
-//			art.setIdArticle(18);
-			art.setDescription("ecran");
-			art.setBrand("DELL");
-			art.setPrice(200.0);
-			art.setIdCategory(1);
-//			ardao.create(art);
-//			System.out.println("new Id 18 " +art);
-//			System.out.println("create " +art);
-//			//update 
-			System.out.println("UPDATE");
-//			art.setDescription("ecranEZDSCE");
-			System.out.println(ardao.update(art));//true/false
-			ardao.readAll().stream().forEach(System.out::println);
-			//delete
-//			ardao.delete(art);
-//			System.out.println("delete " +art);
-	}
-	//const
-//	public ArticleDao(BddConnection bddConnection, ArrayList<Article> a) {
-//		this.bddConnection = bddConnection;
-//		a = new ArrayList<>();
-//	}
-//	public ArticleDao(BddConnection bddConnection) {
-//		this.bddConnection = bddConnection;
-//	}
-	public ArticleDao() {
-		
-	}
 	public void create(Article obj) {
 		String str = "INSERT INTO T_Articles (description, brand, UnitaryPrice, idCategory) VALUES (?,?,?,?);";
 			try (PreparedStatement ps = connection.prepareStatement(str)){
@@ -65,7 +25,10 @@ public class ArticleDao implements Dao{//<Article>
 			e.printStackTrace();
 		}
 	}
-
+	/**@param Int ArticleId
+	 * @return the Article corresponding to Id
+	 * TODO if Article =null in db
+	 */
 	public Article read(int id) {
 		Article myArticle = new Article(id);
 		String str = "SELECT * FROM T_Articles WHERE IdArticle=?;";
@@ -96,7 +59,6 @@ public class ArticleDao implements Dao{//<Article>
 			ps.setInt(4, obj.getIdCategory());
 			ps.setInt(5, obj.getIdArticle());
 			if(ps.executeUpdate() == 1) {
-				System.out.println("insertion ok");
 				return true;
 			}
 			else return false;
